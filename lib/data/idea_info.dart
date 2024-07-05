@@ -20,7 +20,7 @@ class IdeaInfo {
   // IdeaInfo 객체를 Map 객체로 변환
   Map<String, dynamic> toMap() {
     return {
-      'di' : id,
+      'id' : id,
       'title' : title,
       'motive' : motive,
       'content' : content,

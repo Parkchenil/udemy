@@ -22,7 +22,7 @@ class DatabaseHelper {
         title TEXT, 
         motive TEXT,
         content TEXT,
-        priorty INTEGER,
+        priority INTEGER,
         feedback TEXT,
         createdAt INTEGER
       )
