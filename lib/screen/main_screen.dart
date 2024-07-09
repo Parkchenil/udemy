@@ -53,6 +53,7 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // 새 아이디어 작성 화면으로 이동
+          Navigator.pushNamed(context, '/edit');
         },
         child: Image.asset(
           'assets/idea.png',
