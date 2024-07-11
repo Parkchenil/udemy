@@ -46,7 +46,11 @@ class _MainScreenState extends State<MainScreen> {
         child: ListView.builder(
           itemCount: lstIdeaInfo.length,
           itemBuilder: (context, index) {
-            return listItem(index);
+            return GestureDetector(
+              child: listItem(index),
+              onTap: () {
+                Navigator.pushNamed(context, '/detail', arguments: lstIdeaInfo[index]);
+              },);
           },
         ),
       ),
@@ -94,7 +98,8 @@ class _MainScreenState extends State<MainScreen> {
               margin: EdgeInsets.only(right: 16, bottom: 8),
               child: Text(
                 DateFormat("yyyy.MM.dd HH:mm").format(
-                  DateTime.fromMillisecondsSinceEpoch(lstIdeaInfo[index].createdAt),
+                  DateTime.fromMillisecondsSinceEpoch(
+                      lstIdeaInfo[index].createdAt),
                 ),
                 style: TextStyle(color: Color(0xffaeaeae), fontSize: 10),
               ),

@@ -38,6 +38,43 @@ class _EditScreenState extends State<EditScreen> {
   final dbHelper = DatabaseHelper();
 
   @override
+  void initState() {
+    super.initState();
+
+    // 기존 데이터를 수정할 경우 수정의 편의를 위해서 기존의 데이터를 입력 위젯에 자동 기입
+    if (widget.ideaInfo != null) {
+      _titleController.text = widget.ideaInfo!.title;
+      _motiveController.text = widget.ideaInfo!.motive;
+      _contentController.text = widget.ideaInfo!.content;
+      // 피드백 입력필드의 경우는 선택사항 입력필드라서 따로 값이 비어있는지 체크 필요 !
+      if (widget.ideaInfo!.feedback.isNotEmpty) {
+        _feedbackController.text = widget.ideaInfo!.feedback;
+      }
+
+      // 아이디어 중요도 점수 세팅
+      ininClickStatus();
+      switch (widget.ideaInfo!.priority) {
+        case 1:
+          isClickPoint1 = true;
+          break;
+        case 2:
+          isClickPoint2 = true;
+          break;
+        case 3:
+          isClickPoint3 = true;
+          break;
+        case 4:
+          isClickPoint4 = true;
+          break;
+        case 5:
+          isClickPoint5 = true;
+          break;
+      }
+      priorityPoint = widget.ideaInfo!.priority;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -55,7 +92,7 @@ class _EditScreenState extends State<EditScreen> {
           },
         ),
         title: Text(
-          '새 아이디어 작성하기',
+          widget.ideaInfo == null ? '새 아이디어 작성하기' : '아이디어 편집',
           style: TextStyle(color: Colors.black, fontSize: 16),
         ),
       ),

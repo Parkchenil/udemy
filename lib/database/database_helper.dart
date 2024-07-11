@@ -58,11 +58,11 @@ class DatabaseHelper {
   }
 
   // IdeaInfo 데이터 삭제 (delete)
-  Future<int> deleteIdeaInfo(IdeaInfo idea) async {
+  Future<int> deleteIdeaInfo(int id) async {
     return await database.delete(
       'tb_idea',
       where: 'id = ?',
-      whereArgs: [idea.id],
+      whereArgs: [id],
     );
   }
 
