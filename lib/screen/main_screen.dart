@@ -48,16 +48,53 @@ class _MainScreenState extends State<MainScreen> {
           itemBuilder: (context, index) {
             return GestureDetector(
               child: listItem(index),
-              onTap: () {
-                Navigator.pushNamed(context, '/detail', arguments: lstIdeaInfo[index]);
-              },);
+              onTap: () async {
+                var result = await Navigator.pushNamed(context, '/detail',
+                    arguments: lstIdeaInfo[index]);
+                if (result != null) {
+                  String msg = '';
+
+                  if (result == 'update') {
+                    // 수정 완료 (update)
+                    msg = '아이디어가 수정 되었습니다.';
+                  } else if (result == 'delete') {
+                    // 삭제 완료 (delete)
+                    msg = '아이디어가 삭제 되었습니다.';
+                  }
+
+                  // refresh list
+                  getIdeaInfo();
+
+                  // show snackbar
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(msg),
+                      ),
+                    );
+                  }
+                }
+              },
+            );
           },
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           // 새 아이디어 작성 화면으로 이동
-          Navigator.pushNamed(context, '/edit');
+          var result = await Navigator.pushNamed(context, '/edit');
+          if (result != null) {
+            // 아이디어 리스트 다시 불러오기
+            getIdeaInfo();
+            // 아이디어 작성이 완료되었다는 스낵바 메시지를 띄우기
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('새로운 아이디어가 추가 되었습니다'),
+                ),
+              );
+            }
+          }
         },
         child: Image.asset(
           'assets/idea.png',

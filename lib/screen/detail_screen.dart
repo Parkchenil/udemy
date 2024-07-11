@@ -61,7 +61,7 @@ class DetailScreen extends StatelessWidget {
                           // 이전 화면으로 복귀 1. 팝업 종료, 2. 화면 종료
                           if (context.mounted) {
                             Navigator.of(context).pop();
-                            Navigator.pop(context);
+                            Navigator.pop(context, 'delete');
                           }
                         },
                         child: Text(
@@ -200,7 +200,12 @@ class DetailScreen extends StatelessWidget {
             ),
             onTap: () async {
               // 아이디어 수정 화면으로 이동
-              Navigator.pushNamed(context, '/edit', arguments: ideaInfo);
+              var result = await Navigator.pushNamed(context, '/edit', arguments: ideaInfo);
+              if (result != null) {
+                if (context.mounted) {
+                  Navigator.pop(context, 'update');
+                }
+              }
             },
           ),
         ],
